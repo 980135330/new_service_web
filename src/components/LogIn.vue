@@ -61,18 +61,6 @@
 
     export default {
         name: "LogIn",
-        methods:{
-            logevent(){
-                this.$refs.loginForm.validate((valid) => {
-                    if (valid) {
-                        alert('submit!');
-                    } else {
-                        console.log('error submit!!');
-                        return false;
-                    }
-                });
-            }
-        }
     }
 </script>
 
