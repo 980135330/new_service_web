@@ -23,7 +23,7 @@
                     <el-select v-model="form.role"  placeholder="选择身份" style="width:30%; margin:auto">
                         <el-option label="用户" value="user" />
                         <el-option label="机构" value="company" />
-                        <el-option label="管理员" value="manger" />
+<!--                        <el-option label="管理员" value="manger" />-->
                         <el-option label="专家" value="expert" />
 
                     </el-select>
@@ -31,7 +31,7 @@
            
 
                     <el-form-item class="btns">
-                    <el-button type="primary" @click = "logevent">登录</el-button>
+<!--                    <el-button type="primary" @click = "logevent">登录</el-button>-->
                     <el-button @click = "signup">注册</el-button>
                     </el-form-item>
                 </el-form>
@@ -71,22 +71,23 @@
             }
         },
         methods:{
-            async logevent(){
-                const ret = await this.$http.get('login.json')
+            async signup(){
+              const ret = await this.$http.post('http://localhost:9001/user/register',{account: this.form.username,  password: this.form.password,category: this.form.role})
                 console.log(ret)
                 console.log(this.form)
-                if(ret.status == 200 ){
+                if(ret.data.code == 200){
                     this.$message.success('注册成功');
-                    this.$router.push({path :'/companyinfo',  query : { username: this.form.username, role: this.form.role, password: this.form.password}});
+                   this.$router.push('/login')
+                    // this.$router.push({path :'/companyinfo',  query : { username: this.form.username, role: this.form.role, password: this.form.password}});
                     //this.$http.post('/companyinfo',{ username: this.form.username, role: this.form.role, password: this.form.password})
                 }
                 else{
                     this.$message.error('注册失败');
                 }
                 },
-            signup(){
-                this.$message.success('注册成功');
-            }       
+            // signup(){
+            //     this.$message.success('注册成功');
+            // }
             
     }
     }
