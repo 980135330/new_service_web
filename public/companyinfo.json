@@ -1,0 +1,20 @@
+{
+    "datalist":[{
+        "detect_company":"华测检测有限公司",
+        "detect_object":"新能源",
+        "detect_project":"锂电池",
+        "detect_price":88,
+        "detect_time":3,
+        "detect_standard":"AC17652-1"
+        },
+        {
+            "detect_company":"华测检测有限公司",
+            "detect_object":"新能源",
+            "detect_project":"轮胎",
+            "detect_price":160,
+            "detect_time":4,
+            "detect_standard":"AR19976-x"
+        }
+    ]
+}
+

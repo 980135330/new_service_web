@@ -19,10 +19,9 @@
             <span>检测机构</span>
           </template>
           <el-menu-item-group title="商家相关">
-            <el-menu-item index="1-1">服务录入</el-menu-item>
-            <el-menu-item index="1-2">服务管理</el-menu-item>
-            <el-menu-item index="1-2">订单管理</el-menu-item>
-
+            <el-menu-item index="1-1" @click = "companyinput()" >服务录入</el-menu-item>
+            <el-menu-item index="1-2" @click = "companyinfo()">服务管理</el-menu-item>
+            <el-menu-item index="1-2" @click = "companyorder()">订单管理</el-menu-item>
           </el-menu-item-group>
         </el-sub-menu>
 
@@ -50,7 +49,9 @@
                 <el-table-column property="detect_time" label="检测时间" width="120" />
                 <el-table-column property="detect_standard" label="检测标准" width="120" />
                 <el-table-column property="order_time" label="下单时间" width="120" />
+
             </el-table>
+
 
        </el-col>
 
@@ -65,7 +66,34 @@
 
 <script>
 export default{
-    name:"CompanyOrder"
+    name:"CompanyOrder",
+    created(){
+        this.getCompanyOrder();
+    },
+    data(){
+        return{
+            tableData:[]
+        }
+    },
+    methods:{
+        async getCompanyOrder(){
+            const res = await this.$http.get("/companyorder.json");
+            this.tableData = res.data.datalist;
+            console.log(res.data.datalist)
+        },
+        companyinput(){
+            this.$router.push("/companyinput");
+        },
+
+        companyinfo(){
+            this.$router.push("/companyinfo");
+        },
+
+        companyorder(){
+            this.$router.push("/companyorder");
+
+        },
+    }
 }
 
 </script>

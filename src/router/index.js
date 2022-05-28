@@ -11,7 +11,7 @@ import MangerOrder from '../components/MangerOrder.vue'
 import ExpertUpload from '../components/ExpertUpload.vue'
 import UserEval from '../components/UserEval.vue'
 import LogIn from '../components/LogIn.vue'
-
+import SignUp from "../components/SignUp.vue"
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -25,9 +25,10 @@ const router = createRouter({
         { path: '/usereval', component: UserEval },
 
         { path: '/mangerservice', component: MangerService },
-        { path: '/mangeorder', component: MangerOrder },
+        { path: '/mangerorder', component: MangerOrder },
         { path: '/expertupload', component: ExpertUpload },
         { path: '/login', component: LogIn},
+        { path: '/signup', component: SignUp},
 
     ]
 })

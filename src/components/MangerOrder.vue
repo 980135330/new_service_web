@@ -19,8 +19,8 @@
             <span>管理界面</span>
           </template>
           <el-menu-item-group title="管理员">
-            <el-menu-item index="1-1">服务库</el-menu-item>
-            <el-menu-item index="1-2">所有订单</el-menu-item>
+            <el-menu-item index="1-1" @click = "mangerservice">服务库</el-menu-item>
+            <el-menu-item index="1-2" @click = "mangerorder">所有订单</el-menu-item>
           </el-menu-item-group>
         </el-sub-menu>
 
@@ -50,6 +50,12 @@
                 <el-table-column property="detect_standard" label="检测标准" width="120" />
                 <el-table-column property="order_time" label="下单时间" width="120" />
             </el-table>
+
+            <div style="margin-left: 80%; margin-top: 3%;">
+
+            <el-button @click="del()">删除订单</el-button>
+
+            </div>
        </el-col>
 
        
@@ -64,6 +70,24 @@
 <script>
 export default{
     name:"MangerOrder",
+    methods:{
+
+        async del(){
+                        const ret = await this.$http.get('login.json')
+                        console.log(ret.data)
+                        },  
+
+        mangerservice(){
+            this.$router.push({
+                path:"/mangerservice"
+            })
+        },
+        mangerorder(){
+            this.$router.push({
+                path:"/mangerorder"
+            })
+        },
+    }
 }
 
 </script>

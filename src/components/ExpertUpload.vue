@@ -18,9 +18,8 @@
             <el-icon><location /></el-icon>
             <span>管理界面</span>
           </template>
-          <el-menu-item-group title="管理员">
-            <el-menu-item index="1-1">服务库</el-menu-item>
-            <el-menu-item index="1-2">所有订单</el-menu-item>
+          <el-menu-item-group title="专家">
+            <el-menu-item index="1-1">服务评分</el-menu-item>
           </el-menu-item-group>
         </el-sub-menu>
 
@@ -54,6 +53,12 @@
                 
             </el-form>
 
+            <div style="margin-left: 30%;">
+
+            <el-button @click="submit()">提交评价</el-button>
+
+            </div>
+
        </el-col>
 
        
@@ -82,6 +87,12 @@ export default {
                 desc : ''
             }
         }
+    },
+    methods:{
+        async submit(){
+                        const ret = await this.$http.get('login.json')
+                        console.log(ret.data)
+                        },     
     }
 }
 

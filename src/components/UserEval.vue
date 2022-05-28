@@ -18,10 +18,10 @@
             <el-icon><location /></el-icon>
             <span>管理界面</span>
           </template>
-          <el-menu-item-group title="管理员">
-            <el-menu-item index="1-1">服务库</el-menu-item>
-            <el-menu-item index="1-2">所有订单</el-menu-item>
-            <el-menu-item index="1-3">服务评价</el-menu-item>
+          <el-menu-item-group title="检测客户">
+            <el-menu-item index="1-1" @click = "usersearch">服务库</el-menu-item>
+            <el-menu-item index="1-2" @click = "userorder">所有订单</el-menu-item>
+            <el-menu-item index="1-3" @click = "usereval">服务评价</el-menu-item>
 
           </el-menu-item-group>
         </el-sub-menu>
@@ -34,7 +34,7 @@
        </el-col>
 
        <el-col :span = "15">
-            <el-form  label-width="120px">
+            <el-form  label-width="120px" style="width: 70%;">
 
                 <el-form-item label="订单号">
                 <el-input v-model="form.name" />
@@ -64,6 +64,11 @@
                 <el-input v-model="form.name" />
                 </el-form-item>
 
+            <div style="margin-left: 80%; margin-top: 3%;">
+
+            <el-button @click="submit()">提交评价</el-button>
+
+            </div>
                 
             </el-form>
 
@@ -95,7 +100,23 @@ export default {
                 desc : ''
             }
         }
+    },
+    methods:{
+        async submit(){
+                        const ret = await this.$http.get('login.json')
+                        console.log(ret.data)
+                        },     
+        usersearch(){
+            this.$router.push("/usersearch");
+        },
+        userorder(){
+            this.$router.push("/userorder");
+        },
+        usereval(){
+            this.$router.push("/usereval");
+        },
     }
+
 }
 
 

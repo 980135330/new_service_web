@@ -32,7 +32,7 @@
 
                     <el-form-item class="btns">
                     <el-button type="primary" @click = "logevent">登录</el-button>
-                    <el-button type="primary" @click = "signup">注册</el-button>
+                    <el-button @click = "signup">注册</el-button>
                     </el-form-item>
                 </el-form>
                 </div>
@@ -76,31 +76,18 @@
                 console.log(ret)
                 console.log(this.form)
                 if(ret.status == 200 ){
-                    this.$message.success('登录成功');
-                    if (this.form.role == "user"){
-                        this.$router.push('/usersearch')
-                    }
-                    else if (this.form.role == "company"){
-                        this.$router.push('/companyinfo')
-                    }
-                    else if (this.form.role == "manger"){
-                        this.$router.push('/mangerorder')
-                    }
-                    else if (this.form.role == "expert"){
-                        this.$router.push('/expertupload')
-                    }
-                    // this.$router.push({path :'/companyinfo',  query : { username: this.form.username, role: this.form.role, password: this.form.password}});
+                    this.$message.success('注册成功');
+                    this.$router.push({path :'/companyinfo',  query : { username: this.form.username, role: this.form.role, password: this.form.password}});
                     //this.$http.post('/companyinfo',{ username: this.form.username, role: this.form.role, password: this.form.password})
                 }
                 else{
-                    this.$message.error('登录失败');
+                    this.$message.error('注册失败');
                 }
-                    },
+                },
             signup(){
-                
-                
-                this.$router.push('/signup')
-            }
+                this.$message.success('注册成功');
+            }       
+            
     }
     }
 </script>

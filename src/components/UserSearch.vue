@@ -17,10 +17,10 @@
             <el-icon><location /></el-icon>
             <span>检测机构</span>
           </template>
-          <el-menu-item-group title="商家相关">
-            <el-menu-item index="1-1">服务录入</el-menu-item>
-            <el-menu-item index="1-2">服务管理</el-menu-item>
-            <el-menu-item index="1-3">服务评价</el-menu-item>
+          <el-menu-item-group title="检测客户">
+            <el-menu-item index="1-1" @click = "usersearch">服务库检索</el-menu-item>
+            <el-menu-item index="1-2" @click = "userorder">所有订单</el-menu-item>
+            <el-menu-item index="1-3" @click = "usereval">服务评价</el-menu-item>
 
           </el-menu-item-group>
         </el-sub-menu>
@@ -68,6 +68,12 @@
                 <el-table-column property="attitude_score" label="态度评分" width="120" />
                 
             </el-table>
+
+            <div style="margin-left: 80%; margin-top: 3%;">
+
+            <el-button @click="order()">下单</el-button>
+
+            </div>
        </el-col>
 
        
@@ -81,7 +87,23 @@
 
 <script>
 export default{
-    name:"UserSearch"
+    name:"UserSearch",
+    methods:{
+
+        async order(){
+                        const ret = await this.$http.get('login.json')
+                        console.log(ret.data)
+                        },     
+        usersearch(){
+            this.$router.push("/usersearch");
+        },
+        userorder(){
+            this.$router.push("/userorder");
+        },
+        usereval(){
+            this.$router.push("/usereval");
+        },
+    }
 }
 
 </script>
