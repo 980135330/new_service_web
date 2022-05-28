@@ -1,0 +1,23 @@
+{
+    "records":[ {
+        "serviceId": "service20220527114738517404",
+        "detectCompany": "ceCom1",
+        "detectObject": "电池",
+        "detectProject": "性能1",
+        "detectPrice": 1.0,
+        "detectTime": 8,
+        "detectStandard": "GB/T18287",
+        "detectScore": 4.0
+    },
+        {
+            "serviceId": "service20220527114738523730",
+            "detectCompany": "ceCom2",
+            "detectObject": "电池",
+            "detectProject": "性能2",
+            "detectPrice": 4.0,
+            "detectTime": 8,
+            "detectStandard": "GB/T18287",
+            "detectScore": 4.0
+        }
+    ]
+}

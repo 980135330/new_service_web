@@ -39,13 +39,14 @@
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="55" />
-
-                <el-table-column property="detect_company" label="检测机构" width="120" />
-                <el-table-column property="detect_object" label="检测对象" width="120" />
-                <el-table-column property="detect_project" label="检测项目" width="120" />
-                <el-table-column property="detect_price" label="检测价格" width="120" />
-                <el-table-column property="detect_time" label="检测时间" width="120" />
-                <el-table-column property="detect_standard" label="检测标准" width="120" />
+                  <el-table-column property="serviceId" label="服务编号" width="120" />
+                <el-table-column property="detectCompany" label="检测机构" width="120" />
+                <el-table-column property="detectObject" label="检测对象" width="120" />
+                <el-table-column property="detectProject" label="检测项目" width="120" />
+                <el-table-column property="detectPrice" label="检测价格" width="120" />
+                <el-table-column property="detectTime" label="检测时间" width="120" />
+                <el-table-column property="detectStandard" label="检测标准" width="120" />
+                  <el-table-column property="detectScore" label="服务评分" width="120" />
 
             </el-table>
 
@@ -67,7 +68,22 @@
 <script>
 export default{
     name:"MangerService",
+    created(){
+      this.getAllSerivce();
+    },
+  data() {
+    return{
+      tableData:[]
+    }
+  },
     methods:{
+      async getAllSerivce(){
+        const res = await this.$http.get("http://localhost:9001/admin/allService");
+        // const res = await this.$http.get("/allService.json");
+        this.tableData = res.data.data.records;
+        // console.log(res.data.datalist)
+      },
+
 
         async del(){
                         const ret = await this.$http.get('login.json')
