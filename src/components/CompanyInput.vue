@@ -40,45 +40,45 @@
 
 
                 <el-form-item label="检测机构">
-                <el-input v-model="form.detect_company" />
+                <el-input v-model="form.detectCompany" />
                 </el-form-item>
 
 
                 <el-form-item label="检测对象">
-                <el-select v-model="form.detect_object" placeholder="请选择检测对象">
-                    <el-option label="新能源" value="1" />
+                <el-select v-model="form.detectObject" placeholder="请选择检测对象">
+                    <el-option label="新能源" value="新能源" />
                 </el-select>
                 </el-form-item>
 
                 <el-form-item label="检测项目">
-                <el-select v-model="form.detect_project" placeholder="请选择检测项目">
-                    <el-option label="锂电池" value="1" />
-                    <el-option label="轮胎" value="2" />
-                    <el-option label="发动机" value="3" />
-                    <el-option label="机动装置" value="4" />
+                <el-select v-model="form.detectProject" placeholder="请选择检测项目">
+                    <el-option label="锂电池" value="锂电池" />
+                    <el-option label="轮胎" value="轮胎" />
+                    <el-option label="发动机" value="发动机" />
+                    <el-option label="机动装置" value="机动装置" />
 
                 </el-select>
 
                 </el-form-item>
 
                 <el-form-item label="检测价格">
-                <el-input v-model="form.name" />
+                <el-input v-model="form.detectPrice" />
                 </el-form-item>
 
                 <el-form-item label="检测时间">
-                <el-input v-model="form.name" />
+                <el-input v-model="form.detectTime" />
                 </el-form-item>
 
 
                 <el-form-item label="检测标准">
-                <el-input v-model="form.name" />
+                <el-input v-model="form.detectStandard" />
                 </el-form-item>
 
                 
             </el-form>
                 <div style="margin-left: 30%;">
 
-                <el-button @click="deleteSelection()">录入</el-button>
+                <el-button @click="submit()">录入</el-button>
 
               </div>
        </el-col>
@@ -99,19 +99,34 @@ export default {
     data(){
         return {
             form : {
-                name : '',
-                region : '',
-                date1 : '',
-                date2 : '',
-                delivery : false,
-                type : [],
-                resource : '',
-                desc : ''
+              detectCompany : '',
+              detectObject : '',
+              detectProject : '',
+              detectPrice : '',
+              detectTime : '',
+              detectStandard : ''
             }
         }
     },
     methods:{
-        companyinput(){
+      async submit(){
+        const ret = await this.$http.post('http://localhost:9001/company/uploadService',{
+                              detectCompany : this.form.detectCompany,
+                              detectObject : this.form.detectObject,
+                              detectProject : this.form.detectProject,
+                              detectPrice : this.form.detectPrice,
+                              detectTime : this.form.detectTime,
+                              detectStandard : this.form.detectStandard
+                })
+        console.log(ret.data)
+        if(ret.data.code == 200){
+          this.$message.success('提交服务成功');
+        }
+        else{
+          this.$message.error('提交服务失败');
+        }
+      },
+      companyinput(){
             this.$router.push("/companyinput");
         },
 

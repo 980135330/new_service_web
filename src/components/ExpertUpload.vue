@@ -96,7 +96,7 @@ export default {
                         else{
                           this.$message.error('提交权重失败');
                         }
-                        },     
+        },
     }
 }
 
