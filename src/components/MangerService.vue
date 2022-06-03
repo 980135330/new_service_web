@@ -34,7 +34,7 @@
        <el-col :span = "20">
                 <el-table
                 ref="multipleTableRef"
-                :data="tableData"
+                :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
                 style="width: 100%"
                 @selection-change="handleSelectionChange"
             >
@@ -49,6 +49,14 @@
                   <el-table-column property="detectScore" label="服务评分" width="120" />
 
             </el-table>
+         <el-pagination
+             v-model:current-page="currentPage"
+             @current-change="handlePageChange"
+             :page-size="pageSize"
+             :page-sizes = "[2, 10, 50, 500]"
+             layout="total, prev, pager, next"
+             :total="dataCount">
+         </el-pagination>
 
             <div style="margin-left: 80%; margin-top: 3%;">
 
@@ -73,7 +81,10 @@ export default{
     },
   data() {
     return{
-      tableData:[]
+      tableData:[],
+      currentPage: 1,
+      pageSize: 10,
+      dataCount: 100
     }
   },
     methods:{
@@ -81,6 +92,7 @@ export default{
         const res = await this.$http.get("http://localhost:9001/admin/allService");
         // const res = await this.$http.get("/allService.json");
         this.tableData = res.data.data.records;
+        this.dataCount = res.data.data.total;
         // console.log(res.data.datalist)
       },
 
