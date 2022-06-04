@@ -35,10 +35,11 @@
 
        <el-col :span = "20">
                 <el-table
-               
+                
                 :data="tableData"
-                ref="table"
-                style="width: 85% ; margin-left: 0%">
+                ref="Table"
+                style="width: 85% ; margin-left: 0%"
+                @selection-change="handleSelectionChange"
                 >     
                 
                 <el-table-column type="selection"   />
@@ -96,6 +97,22 @@ export default{
             this.$router.push("/companyorder");
 
         },
+        async deleteSelection(){
+            console.log(this.dataonLineListSelections);
+            // console.log(this.multipleSelection)
+            let datalist = [];
+            this.dataonLineListSelections.forEach(item => {
+                datalist.push(item.detect_project);
+            });
+            console.log(datalist);
+            const res = await this.$http.post('/selections/xxx', {selections: datalist});
+            
+            console.log(res)
+        },
+        handleSelectionChange(val) {
+           this.dataonLineListSelections = val;
+        },
+
 
     },
     data(){

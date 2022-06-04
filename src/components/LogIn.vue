@@ -78,7 +78,7 @@
                 if(ret.status == 200 ){
                     this.$message.success('登录成功');
                     if (this.form.role == "user"){
-                        this.$router.push('/usersearch')
+                        this.$router.push({path:'/usersearch',query : { username: this.form.username}})
                     }
                     else if (this.form.role == "company"){
                         this.$router.push('/companyinfo')

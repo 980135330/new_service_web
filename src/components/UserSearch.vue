@@ -88,12 +88,19 @@
 <script>
 export default{
     name:"UserSearch",
+    created(){
+        this.getUserInfo();
+    },
     methods:{
 
         async order(){
                         const ret = await this.$http.get('login.json')
                         console.log(ret.data)
                         },     
+
+        async getUserInfo(){
+            console.log(this.$route.query.username)
+        },
         usersearch(){
             this.$router.push("/usersearch");
         },
