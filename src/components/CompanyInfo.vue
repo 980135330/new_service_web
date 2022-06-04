@@ -35,22 +35,31 @@
 
        <el-col :span = "20">
                 <el-table
-               
-                :data="tableData"
+
+                    :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
                 ref="table"
                 style="width: 85% ; margin-left: 0%">
-                >     
-                
-                <el-table-column type="selection"   />
+                >
 
-                <el-table-column property="detect_company" label="检测机构"    />
-                <el-table-column property="detect_object" label="检测对象"  />
-                <el-table-column property="detect_project" label="检测项目"   />
-                <el-table-column property="detect_price" label="检测价格"   />
-                <el-table-column property="detect_time" label="检测时间"   />
-                <el-table-column property="detect_standard" label="检测标准"  />
+                  <el-table-column type="selection" width="55" />
+                  <el-table-column property="serviceId" label="服务编号" width="120" />
+                  <el-table-column property="detectCompany" label="检测机构" width="120" />
+                  <el-table-column property="detectObject" label="检测对象" width="120" />
+                  <el-table-column property="detectProject" label="检测项目" width="120" />
+                  <el-table-column property="detectPrice" label="检测价格" width="120" />
+                  <el-table-column property="detectTime" label="检测时间" width="120" />
+                  <el-table-column property="detectStandard" label="检测标准" width="120" />
+                  <el-table-column property="detectScore" label="服务评分" width="120" />
 
                 </el-table>
+         <el-pagination
+             v-model:current-page="currentPage"
+             @current-change="handlePageChange"
+             :page-size="pageSize"
+             :page-sizes = "[2, 10, 50, 500]"
+             layout="total, prev, pager, next"
+             :total="dataCount">
+         </el-pagination>
                 
                 <div style="margin-left: 60%;">
 
@@ -75,13 +84,29 @@ export default{
     created(){
         this.getCompanyInfo();
     },
+    data(){
+      return{
+        form : {
+          detectCompany : ''
+
+        },
+        tableData:[],
+        currentPage: 1,
+        pageSize: 10,
+        dataCount: 100
+      }
+    },
 
 
     methods:{
         async getCompanyInfo(){
-            const res = await this.$http.get("/companyinfo.json");
-            this.tableData = res.data.datalist;
-            console.log(res.data.datalist)
+          const res = await this.$http.get("http://localhost:9001/company/myService",{
+            params: {
+              detectCompany: this.form.detectCompany
+            }
+          });
+          this.tableData = res.data.data.records;
+          this.dataCount = res.data.data.total;
         },
 
         companyinput(){
@@ -98,11 +123,7 @@ export default{
         },
 
     },
-    data(){
-        return {
-            tableData:[],
-        }
-      },
+
     watch:{
 
             tableData: {

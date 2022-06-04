@@ -34,22 +34,33 @@
        <el-col :span = "20">
                 <el-table
                 ref="multipleTableRef"
-                :data="tableData"
+                :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
                 style="width: 100%"
                 @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="55" />
 
-                <el-table-column property="order_number" label="订单号" width="120" />
-                <el-table-column property="user_name" label="用户名" width="120" />
-                <el-table-column property="detect_company" label="检测机构" width="120" />
-                <el-table-column property="detect_object" label="检测对象" width="120" />
-                <el-table-column property="detect_project" label="检测项目" width="120" />
-                <el-table-column property="detect_price" label="检测价格" width="120" />
-                <el-table-column property="detect_time" label="检测时间" width="120" />
-                <el-table-column property="detect_standard" label="检测标准" width="120" />
-                <el-table-column property="order_time" label="下单时间" width="120" />
+
+                <el-table-column property="detectCompany" label="订单号" width="120" />
+                <el-table-column property="userName" label="用户名" width="120" />
+                  <el-table-column property="serviceId" label="服务编号" width="120" />
+                <el-table-column property="detectCompany" label="检测机构" width="120" />
+                <el-table-column property="detectObject" label="检测对象" width="120" />
+                <el-table-column property="detectProject" label="检测项目" width="120" />
+                <el-table-column property="detectPrice" label="检测价格" width="120" />
+                <el-table-column property="detectTime" label="检测时间" width="120" />
+                <el-table-column property="detectStandard" label="检测标准" width="120" />
+                <el-table-column property="createTime" label="下单时间" width="120" />
             </el-table>
+         <el-pagination
+             v-model:current-page="currentPage"
+             @current-change="handlePageChange"
+             :page-size="pageSize"
+             :page-sizes = "[2, 10, 50, 500]"
+             layout="total, prev, pager, next"
+             :total="dataCount">
+         </el-pagination>
+         
 
             <div style="margin-left: 80%; margin-top: 3%;">
 
@@ -70,7 +81,26 @@
 <script>
 export default{
     name:"MangerOrder",
+    created(){
+      this.getAllOrder();
+    },
+    data() {
+      return{
+        tableData:[],
+        currentPage: 1,
+        pageSize: 10,
+        dataCount: 100
+
+      }
+    },
     methods:{
+      async getAllOrder(){
+        const res = await this.$http.get("http://localhost:9001/admin/allOrder");
+        // const res = await this.$http.get("/allService.json");
+        this.tableData = res.data.data.records;
+        this.dataCount = res.data.data.total;
+        // console.log(res.data.datalist)
+      },
 
         async del(){
                         const ret = await this.$http.get('login.json')

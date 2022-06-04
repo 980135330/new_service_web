@@ -31,11 +31,26 @@
            
        </el-container>
        </el-col>
+      <el-col :span = "20">
+        <el-form  label-width="100px" style="width: 70%;">
 
-       <el-col :span = "20">
+
+          <el-form-item label="检测机构">
+            <el-input v-model="form.detectCompany" />
+          </el-form-item>
+
+        </el-form>
+        <div style="margin-left: 30%;">
+
+          <el-button @click="getCompanyOrder">查找订单</el-button>
+
+        </div>
+<!--      </el-col>-->
+
+<!--       <el-col :span = "20">-->
                 <el-table
                 ref="multipleTableRef"
-                :data="tableData"
+                :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
                 style="width: 100%"
                 @selection-change="handleSelectionChange"
             >
@@ -43,6 +58,7 @@
 
                 <el-table-column property="order_number" label="订单号" width="120" />
                 <el-table-column property="user_name" label="用户名" width="120" />
+                  <el-table-column property="serviceId" label="服务编号" width="120" />
                 <el-table-column property="detect_object" label="检测对象" width="120" />
                 <el-table-column property="detect_project" label="检测项目" width="120" />
                 <el-table-column property="detect_price" label="检测价格" width="120" />
@@ -51,6 +67,14 @@
                 <el-table-column property="order_time" label="下单时间" width="120" />
 
             </el-table>
+        <el-pagination
+            v-model:current-page="currentPage"
+            @current-change="handlePageChange"
+            :page-size="pageSize"
+            :page-sizes = "[2, 10, 50, 500]"
+            layout="total, prev, pager, next"
+            :total="dataCount">
+        </el-pagination>
 
 
        </el-col>
@@ -72,14 +96,25 @@ export default{
     },
     data(){
         return{
-            tableData:[]
+          form : {
+            detectCompany : ''
+
+          },
+          tableData:[],
+          currentPage: 1,
+          pageSize: 10,
+          dataCount: 100
         }
     },
     methods:{
         async getCompanyOrder(){
-            const res = await this.$http.get("/companyorder.json");
-            this.tableData = res.data.datalist;
-            console.log(res.data.datalist)
+          const res = await this.$http.get("http://localhost:9001/company/myOrder",{
+            params: {
+              detectCompany: this.form.detectCompany
+            }
+          });
+          this.tableData = res.data.data.records;
+          this.dataCount = res.data.data.total;
         },
         companyinput(){
             this.$router.push("/companyinput");

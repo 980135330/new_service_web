@@ -34,20 +34,20 @@
             <el-form  label-width="180px">
 
                 <el-form-item label="专家ID">
-                <el-input v-model="form.name" />
+                <el-input v-model="form.account" />
                 </el-form-item>
 
 
                 <el-form-item label="质量评分权重">
-                <el-input v-model="form.name" />
+                <el-input v-model="form.quality" />
                 </el-form-item>
 
                 <el-form-item label="速度评分权重">
-                <el-input v-model="form.name" />
+                <el-input v-model="form.speed" />
                 </el-form-item>
                
                 <el-form-item label="态度评分权重">
-                <el-input v-model="form.name" />
+                <el-input v-model="form.attitude" />
                 </el-form-item>
 
                 
@@ -77,22 +77,26 @@ export default {
     data(){
         return {
             form : {
-                name : '',
-                region : '',
-                date1 : '',
-                date2 : '',
-                delivery : false,
-                type : [],
-                resource : '',
-                desc : ''
+               account : '',
+              quality : 4,
+              speed : 4,
+              attitude : 4
+
             }
         }
     },
     methods:{
         async submit(){
-                        const ret = await this.$http.get('login.json')
+                        const ret = await this.$http.post('http://localhost:9001/expert/uploadRateWeight',{ account: this.form.account,
+                          quality: this.form.quality, speed: this.form.speed, attitude: this.form.attitude})
                         console.log(ret.data)
-                        },     
+                        if(ret.data.code == 200){
+                          this.$message.success('提交权重成功');
+                        }
+                        else{
+                          this.$message.error('提交权重失败');
+                        }
+        },
     }
 }
 

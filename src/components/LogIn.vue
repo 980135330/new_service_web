@@ -72,10 +72,10 @@
         },
         methods:{
             async logevent(){
-                const ret = await this.$http.get('login.json')
+                const ret = await this.$http.post('http://localhost:9001/user/login',{account: this.form.username,  password: this.form.password,category: this.form.role})
                 console.log(ret)
                 console.log(this.form)
-                if(ret.status == 200 ){
+                if(ret.data.code == 200 ){
                     this.$message.success('登录成功');
                     if (this.form.role == "user"){
                         this.$router.push('/usersearch')
