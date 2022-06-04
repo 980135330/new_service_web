@@ -33,9 +33,9 @@
        <el-col :span = "15">
             <el-form  label-width="180px">
 
-                <el-form-item label="专家ID">
-                <el-input v-model="form.account" />
-                </el-form-item>
+<!--                <el-form-item label="专家ID">-->
+<!--                <el-input v-model="form.account" />-->
+<!--                </el-form-item>-->
 
 
                 <el-form-item label="质量评分权重">
@@ -74,6 +74,9 @@
 
 export default {
     name : 'ExpertUpload',
+    created(){
+      this.getExpertInfo();
+    },
     data(){
         return {
             form : {
@@ -86,6 +89,10 @@ export default {
         }
     },
     methods:{
+      async getExpertInfo(){
+        console.log(this.$route.query.account)
+        this.form.account=this.$route.query.username
+      },
         async submit(){
                         const ret = await this.$http.post('http://localhost:9001/expert/uploadRateWeight',{ account: this.form.account,
                           quality: this.form.quality, speed: this.form.speed, attitude: this.form.attitude})

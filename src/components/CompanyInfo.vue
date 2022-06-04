@@ -109,18 +109,19 @@ export default{
           this.dataCount = res.data.data.total;
         },
 
-        companyinput(){
-            this.$router.push("/companyinput");
-        },
+      companyinput(){
+        this.$router.push({path:'/companyinput',query : { detectCompany: this.form.detectCompany}})
+      },
 
-        companyinfo(){
-            this.$router.push("/companyinfo");
-        },
+      companyinfo(){
+        this.$router.push({path:'/companyinfo',query : { detectCompany: this.form.detectCompany}})
 
-        companyorder(){
-            this.$router.push("/companyorder");
+      },
 
-        },
+      companyorder(){
+        this.$router.push({path:'/companyorder',query : { detectCompany: this.form.detectCompany}})
+
+      },
 
     },
 

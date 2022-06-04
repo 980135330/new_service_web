@@ -32,22 +32,6 @@
        </el-container>
        </el-col>
       <el-col :span = "20">
-        <el-form  label-width="100px" style="width: 70%;">
-
-
-          <el-form-item label="检测机构">
-            <el-input v-model="form.detectCompany" />
-          </el-form-item>
-
-        </el-form>
-        <div style="margin-left: 30%;">
-
-          <el-button @click="getCompanyOrder">查找订单</el-button>
-
-        </div>
-<!--      </el-col>-->
-
-<!--       <el-col :span = "20">-->
                 <el-table
                 ref="multipleTableRef"
                 :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
@@ -56,15 +40,16 @@
             >
                 <el-table-column type="selection" width="55" />
 
-                <el-table-column property="order_number" label="订单号" width="120" />
-                <el-table-column property="user_name" label="用户名" width="120" />
+                  <el-table-column property="detectCompany" label="订单号" width="120" />
+                  <el-table-column property="userName" label="用户名" width="120" />
                   <el-table-column property="serviceId" label="服务编号" width="120" />
-                <el-table-column property="detect_object" label="检测对象" width="120" />
-                <el-table-column property="detect_project" label="检测项目" width="120" />
-                <el-table-column property="detect_price" label="检测价格" width="120" />
-                <el-table-column property="detect_time" label="检测时间" width="120" />
-                <el-table-column property="detect_standard" label="检测标准" width="120" />
-                <el-table-column property="order_time" label="下单时间" width="120" />
+                  <el-table-column property="detectCompany" label="检测机构" width="120" />
+                  <el-table-column property="detectObject" label="检测对象" width="120" />
+                  <el-table-column property="detectProject" label="检测项目" width="120" />
+                  <el-table-column property="detectPrice" label="检测价格" width="120" />
+                  <el-table-column property="detectTime" label="检测时间" width="120" />
+                  <el-table-column property="detectStandard" label="检测标准" width="120" />
+                  <el-table-column property="createTime" label="下单时间" width="120" />
 
             </el-table>
         <el-pagination
@@ -92,6 +77,7 @@
 export default{
     name:"CompanyOrder",
     created(){
+        this.getCompanyInfo();
         this.getCompanyOrder();
     },
     data(){
@@ -107,6 +93,10 @@ export default{
         }
     },
     methods:{
+        async getCompanyInfo(){
+          console.log(this.$route.query.username)
+          this.form.detectCompany=this.$route.query.username
+        },
         async getCompanyOrder(){
           const res = await this.$http.get("http://localhost:9001/company/myOrder",{
             params: {
@@ -117,15 +107,16 @@ export default{
           this.dataCount = res.data.data.total;
         },
         companyinput(){
-            this.$router.push("/companyinput");
+          this.$router.push({path:'/companyinput',query : { detectCompany: this.form.detectCompany}})
         },
 
         companyinfo(){
-            this.$router.push("/companyinfo");
+          this.$router.push({path:'/companyinfo',query : { detectCompany: this.form.detectCompany}})
+
         },
 
         companyorder(){
-            this.$router.push("/companyorder");
+            this.$router.push({path:'/companyorder',query : { detectCompany: this.form.detectCompany}})
 
         },
     }

@@ -78,16 +78,18 @@
                 if(ret.data.code == 200 ){
                     this.$message.success('登录成功');
                     if (this.form.role == "user"){
-                        this.$router.push('/usersearch')
+                      this.$router.push({path:'/usersearch',query : { username: this.form.username}})
                     }
                     else if (this.form.role == "company"){
-                        this.$router.push('/companyinfo')
+                      this.$router.push({path:'/companyinfo',query : { detectCompany: this.form.username}})
+                        // this.$router.push('/companyinfo')
                     }
                     else if (this.form.role == "manger"){
                         this.$router.push('/mangerorder')
                     }
                     else if (this.form.role == "expert"){
-                        this.$router.push('/expertupload')
+                      this.$router.push({path:'/expertupload',query : {account: this.form.username}})
+                        // this.$router.push('/expertupload')
                     }
                     // this.$router.push({path :'/companyinfo',  query : { username: this.form.username, role: this.form.role, password: this.form.password}});
                     //this.$http.post('/companyinfo',{ username: this.form.username, role: this.form.role, password: this.form.password})
