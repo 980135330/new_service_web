@@ -39,9 +39,9 @@
             <el-form  label-width="100px" style="width: 70%;">
 
 
-                <el-form-item label="检测机构">
-                <el-input v-model="form.detectCompany" />
-                </el-form-item>
+<!--                <el-form-item label="检测机构">-->
+<!--                <el-input v-model="form.detectCompany" />-->
+<!--                </el-form-item>-->
 
 
                 <el-form-item label="检测对象">
@@ -96,6 +96,9 @@
 
 export default {
     name : 'CompanyInput',
+  created(){
+    this.getCompanyInfo();
+  },
     data(){
         return {
             form : {
@@ -109,6 +112,10 @@ export default {
         }
     },
     methods:{
+      async getCompanyInfo(){
+        console.log(this.$route.query.username)
+        this.form.detectCompany=this.$route.query.username
+      },
       async submit(){
         const ret = await this.$http.post('http://localhost:9001/company/uploadService',{
                               detectCompany : this.form.detectCompany,

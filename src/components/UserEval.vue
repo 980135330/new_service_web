@@ -103,6 +103,10 @@ export default {
     }
   },
     methods:{
+        async getUserInfo(){
+          console.log(this.$route.query.username)
+          this.form.username=this.$route.query.username
+        },
         async submit(){
                         const ret = await this.$http.get('login.json')
                         console.log(ret.data)

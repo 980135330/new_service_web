@@ -37,8 +37,9 @@
                 <el-table
 
                     :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
-                ref="table"
-                style="width: 85% ; margin-left: 0%">
+                    ref="Table"
+                    style="width: 85% ; margin-left: 0%"
+                    @selection-change="handleSelectionChange"
                 >
 
                   <el-table-column type="selection" width="55" />
@@ -83,6 +84,7 @@ export default{
     name:"CompanyInfo",
     created(){
         this.getCompanyInfo();
+        this.getCompanyService();
     },
     data(){
       return{
@@ -100,6 +102,10 @@ export default{
 
     methods:{
         async getCompanyInfo(){
+          console.log(this.$route.query.username)
+          this.form.detectCompany=this.$route.query.username
+        },
+        async getCompanyService(){
           const res = await this.$http.get("http://localhost:9001/company/myService",{
             params: {
               detectCompany: this.form.detectCompany
@@ -108,6 +114,21 @@ export default{
           this.tableData = res.data.data.records;
           this.dataCount = res.data.data.total;
         },
+      async deleteSelection(){
+        console.log(this.dataonLineListSelections);
+        // console.log(this.multipleSelection)
+        let datalist = [];
+        this.dataonLineListSelections.forEach(item => {
+          datalist.push(item.detect_project);
+        });
+        console.log(datalist);
+        const res = await this.$http.post('/selections/xxx', {selections: datalist});
+
+        console.log(res)
+      },
+      handleSelectionChange(val) {
+        this.dataonLineListSelections = val;
+      },
 
       companyinput(){
         this.$router.push({path:'/companyinput',query : { detectCompany: this.form.detectCompany}})
