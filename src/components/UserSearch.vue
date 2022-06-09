@@ -19,7 +19,7 @@
           </template>
           <el-menu-item-group title="检测客户">
             <el-menu-item index="1-1" @click = "usersearch()">服务库检索</el-menu-item>
-            <el-menu-item index="1-2" @click = "userorder()">所有订单</el-menu-item>
+            <el-menu-item index="1-2" @click = "userorder()">我的订单</el-menu-item>
             <el-menu-item index="1-3" @click = "usereval()">服务评价</el-menu-item>
 
           </el-menu-item-group>
@@ -108,7 +108,7 @@
 export default{
     name:"UserSearch",
     async created() {
-      await this.getUserInfo();
+       this.getUserInfo();
     },
   data(){
     return{
