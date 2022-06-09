@@ -102,8 +102,8 @@ export default{
 
     methods:{
         async getCompanyInfo(){
-          console.log(this.$route.query.username)
-          this.form.detectCompany=this.$route.query.username
+          console.log(this.$route.query.detectCompany)
+          this.form.detectCompany=this.$route.query.detectCompany
         },
         async getCompanyService(){
           const res = await this.$http.get("http://localhost:9001/company/myService",{

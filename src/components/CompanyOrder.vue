@@ -93,10 +93,10 @@ export default{
         }
     },
     methods:{
-        async getCompanyInfo(){
-          console.log(this.$route.query.username)
-          this.form.detectCompany=this.$route.query.username
-        },
+      async getCompanyInfo(){
+        console.log(this.$route.query.detectCompany)
+        this.form.detectCompany=this.$route.query.detectCompany
+      },
         async getCompanyOrder(){
           const res = await this.$http.get("http://localhost:9001/company/myOrder",{
             params: {
