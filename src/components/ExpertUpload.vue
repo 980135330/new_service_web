@@ -91,7 +91,7 @@ export default {
     methods:{
       async getExpertInfo(){
         console.log(this.$route.query.account)
-        this.form.account=this.$route.query.username
+        this.form.account=this.$route.query.account
       },
         async submit(){
                         const ret = await this.$http.post('http://localhost:9001/expert/uploadRateWeight',{ account: this.form.account,

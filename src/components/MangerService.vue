@@ -60,7 +60,7 @@
 
             <div style="margin-left: 80%; margin-top: 3%;">
 
-            <el-button @click="del()">删除订单</el-button>
+            <el-button @click="deleteSelection()">删除订单</el-button>
 
             </div>
             
@@ -95,12 +95,34 @@ export default{
         this.dataCount = res.data.data.total;
         // console.log(res.data.datalist)
       },
+      //删除，传递选中数据到后端
+      async deleteSelection(){
+        console.log(this.dataonLineListSelections);
+        // console.log(this.multipleSelection)
+        let datalist = [];
+        this.dataonLineListSelections.forEach(item => {
+          this.$http.get("http://localhost:9001/admin/deleteService",{
+            params: {
+              serviceId: item.serviceId
+            }
+          });
+          datalist.push(item.serviceId);
+        });
+        this.$message.success('删除服务成功');
+        console.log(datalist);
+        // const res = await this.$http.post('http://localhost:9001/company/deleteService', {selections: datalist});
+
+        // console.log(res)
+      },
+      handleSelectionChange(val) {
+        this.dataonLineListSelections = val;
+      },
 
 
-        async del(){
-                        const ret = await this.$http.get('login.json')
-                        console.log(ret.data)
-                        },  
+        // async del(){
+        //                 const ret = await this.$http.get('login.json')
+        //                 console.log(ret.data)
+        //                 },
 
         mangerservice(){
             this.$router.push({

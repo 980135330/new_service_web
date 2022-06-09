@@ -33,13 +33,15 @@
 
        <el-col :span = "20">
                <el-col :span="12" style="margin-left: 20%;">
-              <el-input  placeholder="请输入检测服务内容"
+              <el-input  v-model="form.requirement"
+                  placeholder="请输入检测服务内容"
                     prefix-icon="el-icon-search"
                     style="top: 20%;width: 150%;left: 0%;"
                     >
 
+
                         <template #append>
-                            <el-button type="primary" @click="open1"
+                            <el-button type="primary" @click="findSerivce()"
                                 style="background-color: rgb(65, 185, 183);color: white;">智能匹配
                             </el-button>
                         </template>
@@ -52,20 +54,29 @@
                 style="width: 100%;margin-top: 5%;"
                 @selection-change="handleSelectionChange"
             >
-                <el-table-column type="selection" width="55" />
 
-                <el-table-column property="name" label="检测机构" width="120" />
-                <el-table-column label="服务名称" width="120">
-                <template #default="scope">{{ scope.row.date }}</template>
-                </el-table-column>
-                <el-table-column property="detect_object" label="检测对象" width="120" />
-                <el-table-column property="detect_project" label="检测项目" width="120" />
-                <el-table-column property="detect_price" label="检测价格" width="120" />
-                <el-table-column property="detect_time" label="检测时间" width="120" />
-                <el-table-column property="detect_standard" label="检测标准" width="120" />
-                <el-table-column property="quality_score" label="质量评分" width="120" />
-                <el-table-column property="speed_score" label="速度评分" width="120" />
-                <el-table-column property="attitude_score" label="态度评分" width="120" />
+                  <el-table-column type="selection" width="55" />
+                  <el-table-column property="serviceId" label="服务编号" width="120" />
+                  <el-table-column property="detectCompany" label="检测机构" width="120" />
+                  <el-table-column property="detectObject" label="检测对象" width="120" />
+                  <el-table-column property="detectProject" label="检测项目" width="120" />
+                  <el-table-column property="detectPrice" label="检测价格" width="120" />
+                  <el-table-column property="detectTime" label="检测时间" width="120" />
+                  <el-table-column property="detectStandard" label="检测标准" width="120" />
+                  <el-table-column property="detectScore" label="服务评分" width="120" />
+
+<!--                <el-table-column property="name" label="检测机构" width="120" />-->
+<!--                <el-table-column label="服务名称" width="120">-->
+<!--                <template #default="scope">{{ scope.row.date }}</template>-->
+<!--                </el-table-column>-->
+<!--                <el-table-column property="detect_object" label="检测对象" width="120" />-->
+<!--                <el-table-column property="detect_project" label="检测项目" width="120" />-->
+<!--                <el-table-column property="detect_price" label="检测价格" width="120" />-->
+<!--                <el-table-column property="detect_time" label="检测时间" width="120" />-->
+<!--                <el-table-column property="detect_standard" label="检测标准" width="120" />-->
+<!--                <el-table-column property="quality_score" label="质量评分" width="120" />-->
+<!--                <el-table-column property="speed_score" label="速度评分" width="120" />-->
+<!--                <el-table-column property="attitude_score" label="态度评分" width="120" />-->
                 
             </el-table>
            <el-pagination
@@ -79,7 +90,7 @@
 
             <div style="margin-left: 80%; margin-top: 3%;">
 
-            <el-button @click="order()">下单</el-button>
+            <el-button @click="makeOrder()">下单</el-button>
 
             </div>
        </el-col>
@@ -96,13 +107,21 @@
 <script>
 export default{
     name:"UserSearch",
-    created(){
-      this.getUserInfo();
+    async created() {
+      await this.getUserInfo();
     },
   data(){
     return{
       form : {
-        username : ''
+        username : '',
+        requirement : ''
+        // serviceId : '',
+        // detectCompany : '',
+        // detectObject : '',
+        // detectProject : '',
+        // detectPrice : '',
+        // detectTime : '',
+        // detectStandard : ''
 
       },
       tableData:[],
@@ -112,16 +131,46 @@ export default{
     }
   },
     methods:{
+      //选中服务，下单
+      async makeOrder(){
+        console.log(this.dataonLineListSelections);
+        // console.log(this.multipleSelection)
+        let datalist = [];
+        this.dataonLineListSelections.forEach(item => {
+          this.$http.post("http://localhost:9001/user/makeOrder",{
+              detectCompany: item.detectCompany,
+              serviceId: item.serviceId,
+            detectObject: item.detectObject,
+            detectProject : item.detectProject,
+            detectPrice : item.detectPrice,
+            detectTime : item.detectTime,
+            detectStandard : item.detectStandard,
+            username : this.form.username
 
-        async order(){
-          const res = await this.$http.get("http://localhost:9001/user/myOrder",{
-            params: {
-              username: this.form.username
-            }
           });
-          this.tableData = res.data.data.records;
-          this.dataCount = res.data.data.total;
-                        },
+          datalist.push(item.serviceId);
+        });
+        this.$message.success('下单成功');
+        console.log(datalist);
+        // const res = await this.$http.post('http://localhost:9001/company/deleteService', {selections: datalist});
+
+        // console.log(res)
+      },
+      handleSelectionChange(val) {
+        this.dataonLineListSelections = val;
+      },
+
+      async findSerivce(){
+        const res = await this.$http.get("http://localhost:9001/user/findService",{
+          params: {
+            requirement: this.form.requirement
+          }
+        });
+        // const res = await this.$http.get("/allService.json");
+        this.tableData = res.data.data.records;
+        this.dataCount = res.data.data.total;
+        // console.log(res.data.datalist)
+      },
       async getUserInfo(){
         console.log(this.$route.query.username)
         this.form.username=this.$route.query.username

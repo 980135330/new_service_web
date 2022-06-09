@@ -114,17 +114,23 @@ export default{
           this.tableData = res.data.data.records;
           this.dataCount = res.data.data.total;
         },
+      //删除，传递选中数据到后端
       async deleteSelection(){
         console.log(this.dataonLineListSelections);
         // console.log(this.multipleSelection)
         let datalist = [];
         this.dataonLineListSelections.forEach(item => {
-          datalist.push(item.detect_project);
+          this.$http.get("http://localhost:9001/company/deleteService",{
+            params: {
+              serviceId: item.serviceId
+            }
+          });
+          datalist.push(item.serviceId);
         });
         console.log(datalist);
-        const res = await this.$http.post('/selections/xxx', {selections: datalist});
+        // const res = await this.$http.post('http://localhost:9001/company/deleteService', {selections: datalist});
 
-        console.log(res)
+        // console.log(res)
       },
       handleSelectionChange(val) {
         this.dataonLineListSelections = val;

@@ -39,15 +39,39 @@
             >
                 <el-table-column type="selection" width="55" />
 
-                <el-table-column property="order_number" label="订单号" width="120" />
+                <el-table-column property="orderNumber" label="订单号" width="120" />
                   <el-table-column property="serviceId" label="服务编号" width="120" />
-                <el-table-column property="detect_company" label="检测机构" width="120" />
-                <el-table-column property="detect_object" label="检测对象" width="120" />
-                <el-table-column property="detect_project" label="检测项目" width="120" />
-                <el-table-column property="detect_price" label="检测价格" width="120" />
-                <el-table-column property="detect_time" label="检测时间" width="120" />
-                <el-table-column property="detect_standard" label="检测标准" width="120" />
-                <el-table-column property="order_time" label="下单时间" width="120" />
+                  <el-table-column property="detectCompany" label="检测机构" width="120" />
+                  <el-table-column property="detectObject" label="检测对象" width="120" />
+                  <el-table-column property="detectProject" label="检测项目" width="120" />
+<!--                  <el-table-column property="detectPrice" label="检测价格" width="120" />-->
+<!--                  <el-table-column property="detectTime" label="检测时间" width="120" />-->
+<!--                  <el-table-column property="detectStandard" label="检测标准" width="120" />-->
+<!--                  <el-table-column property="detectScore" label="服务评分" width="120" />-->
+                  <el-table-column property="quality" label="质量评分" width="120">
+                      <el-input
+                          size="mini"
+                          v-model="this.form.quality"
+                          placeholder="请输入（1-5）"
+                      ></el-input>
+                      <span>{{ this.form.quality }}</span>
+                  </el-table-column>
+                  <el-table-column property="speed" label="速度评分" width="120">
+                    <el-input
+                        size="mini"
+                        v-model="this.form.speed"
+                        placeholder="请输入（1-5）"
+                    ></el-input>
+                    <span>{{ this.form.speed }}</span>
+                  </el-table-column>
+                  <el-table-column property="attitude" label="态度评分" width="120">
+                    <el-input
+                        size="mini"
+                        v-model="this.form.attitude"
+                        placeholder="请输入（1-5）"
+                    ></el-input>
+                    <span>{{ this.form.attitude }}</span>
+                  </el-table-column>
             </el-table>
          <el-pagination
              v-model:current-page="currentPage"
@@ -78,13 +102,17 @@
 <script>
 export default{
     name:"UserOrder",
-  created(){
+   created() {
     this.getUserInfo();
+    this.myOrder();
   },
   data(){
     return{
       form : {
-        username : ''
+        username : '',
+        quality: 4,
+        speed: 4,
+        attitude: 4
 
       },
       tableData:[],
@@ -95,7 +123,9 @@ export default{
   },
   methods:{
 
-    async order(){
+    async myOrder(){
+      // await this.getUserInfo();
+      console.log("查找订单")
       const res = await this.$http.get("http://localhost:9001/user/myOrder",{
         params: {
           username: this.form.username
@@ -109,6 +139,7 @@ export default{
       this.form.username=this.$route.query.username
     },
     usersearch(){
+      // await this.getUserInfo();
       this.$router.push({path:'/usersearch',query : { username: this.form.username}})
     },
     userorder(){

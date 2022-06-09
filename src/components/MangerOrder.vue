@@ -41,7 +41,7 @@
                 <el-table-column type="selection" width="55" />
 
 
-                <el-table-column property="detectCompany" label="订单号" width="120" />
+                <el-table-column property="orderNumber" label="订单号" width="120" />
                 <el-table-column property="userName" label="用户名" width="120" />
                   <el-table-column property="serviceId" label="服务编号" width="120" />
                 <el-table-column property="detectCompany" label="检测机构" width="120" />
@@ -64,7 +64,7 @@
 
             <div style="margin-left: 80%; margin-top: 3%;">
 
-            <el-button @click="del()">删除订单</el-button>
+            <el-button @click="deleteSelectionOrder()">删除订单</el-button>
 
             </div>
        </el-col>
@@ -102,10 +102,25 @@ export default{
         // console.log(res.data.datalist)
       },
 
-        async del(){
-                        const ret = await this.$http.get('login.json')
-                        console.log(ret.data)
-                        },  
+      async deleteSelectionOrder(){
+        console.log(this.dataonLineListSelections);
+        // console.log(this.multipleSelection)
+        let datalist = [];
+        this.dataonLineListSelections.forEach(item => {
+          this.$http.get("http://localhost:9001/admin/deleteOrder",{
+            params: {
+              orderNumber: item.orderNumber
+            }
+          });
+          datalist.push(item.orderNumber);
+        });
+        this.$message.success('删除订单成功');
+        console.log(datalist);
+
+      },
+      handleSelectionChange(val) {
+        this.dataonLineListSelections = val;
+      },
 
         mangerservice(){
             this.$router.push({
