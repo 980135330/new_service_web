@@ -67,6 +67,10 @@
                 <el-input v-model="form.attitude" />
                 </el-form-item>
 
+              <el-form-item label="留言">
+                <el-input v-model="form.comment" />
+              </el-form-item>
+
             <div style="margin-left: 80%; margin-top: 3%;">
 
             <el-button @click="submit()">提交评价</el-button>
@@ -100,7 +104,8 @@ export default {
         orderNumber: '',
         quality: '',
         speed: '',
-        attitude: ''
+        attitude: '',
+        comment: ''
 
       },
       tableData:[],
@@ -116,19 +121,20 @@ export default {
           this.$message.success('用户名'+this.form.username);
         },
         async submit(){
-          const ret = await this.$http.post('http://localhost:9001/user/comment',{
+          const ret = await this.$http.post('http://localhost:9001/user/updateRate',{
             orderNumber : this.form.orderNumber,
             quality : this.form.quality,
             speed : this.form.speed,
             attitude : this.form.attitude,
-            userName : this.form.username
+            userName : this.form.username,
+            comment : this.form.comment
           })
           console.log(ret.data)
           if(ret.data.code == 200){
-            this.$message.success('提交服务成功');
+            this.$message.success('提交评价成功');
           }
           else{
-            this.$message.error('提交服务失败');
+            this.$message.error('提交评价失败');
           }
         },
       usersearch(){

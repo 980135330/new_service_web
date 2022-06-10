@@ -32,6 +32,11 @@
        </el-col>
 
        <el-col :span = "20">
+         <div style="margin-left: 80%; margin-top: 3%;">
+
+           <el-button @click="updateAllRate()">更新所有服务评分</el-button>
+
+         </div>
                 <el-table
                 ref="multipleTableRef"
                 :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
@@ -94,6 +99,16 @@ export default{
         this.tableData = res.data.data.records;
         this.dataCount = res.data.data.total;
         // console.log(res.data.datalist)
+      },
+      async updateAllRate(){
+        const ret = await this.$http.get("http://localhost:9001/admin/updateAllRate");
+        console.log(ret.data)
+        if(ret.data.code == 200){
+          this.$message.success('更新所有服务评分成功');
+        }
+        else{
+          this.$message.error('更新所有服务评分失败');
+        }
       },
       //删除，传递选中数据到后端
       async deleteSelection(){
