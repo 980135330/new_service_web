@@ -16,7 +16,7 @@
         <el-sub-menu index="1">
           <template #title>
             <el-icon><location /></el-icon>
-            <span>管理界面</span>
+            <span>用户操作</span>
           </template>
           <el-menu-item-group title="检测客户">
             <el-menu-item index="1-1" @click = "usersearch()">服务库</el-menu-item>
@@ -56,15 +56,15 @@
 <!--                </el-form-item>-->
 
                 <el-form-item label="质量评分">
-                <el-input v-model="form.quality" />
+                <el-input v-model="form.quality" placeholder="请输入1-5" />
                 </el-form-item>
 
                 <el-form-item label="速度评分">
-                <el-input v-model="form.speed" />
+                <el-input v-model="form.speed" placeholder="请输入1-5"/>
                 </el-form-item>
                
                 <el-form-item label="态度评分">
-                <el-input v-model="form.attitude" />
+                <el-input v-model="form.attitude" placeholder="请输入1-5"/>
                 </el-form-item>
 
               <el-form-item label="留言">

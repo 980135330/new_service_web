@@ -16,7 +16,7 @@
         <el-sub-menu index="1">
           <template #title>
             <el-icon><location /></el-icon>
-            <span>管理界面</span>
+            <span>专家界面</span>
           </template>
           <el-menu-item-group title="专家">
             <el-menu-item index="1-1">服务评分</el-menu-item>
@@ -39,15 +39,15 @@
 
 
                 <el-form-item label="质量评分权重">
-                <el-input v-model="form.quality" />
+                <el-input v-model="form.quality" placeholder="三个权重累加为100"/>
                 </el-form-item>
 
                 <el-form-item label="速度评分权重">
-                <el-input v-model="form.speed" />
+                <el-input v-model="form.speed" placeholder="三个权重累加为100"/>
                 </el-form-item>
                
                 <el-form-item label="态度评分权重">
-                <el-input v-model="form.attitude" />
+                <el-input v-model="form.attitude" placeholder="三个权重累加为100"/>
                 </el-form-item>
 
                 
@@ -81,9 +81,9 @@ export default {
         return {
             form : {
                account : '',
-              quality : 4,
-              speed : 4,
-              attitude : 4
+              quality : '',
+              speed : '',
+              attitude : ''
 
             }
         }

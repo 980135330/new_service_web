@@ -15,7 +15,7 @@
         <el-sub-menu index="1">
           <template #title>
             <el-icon><location /></el-icon>
-            <span>检测机构</span>
+            <span>用户操作</span>
           </template>
           <el-menu-item-group title="检测客户">
             <el-menu-item index="1-1" @click = "usersearch()">服务库检索</el-menu-item>

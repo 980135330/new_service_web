@@ -105,6 +105,10 @@ export default{
         console.log(ret.data)
         if(ret.data.code == 200){
           this.$message.success('更新所有服务评分成功');
+          this.$router.push({
+            path:"/mangerservice"
+          })
+
         }
         else{
           this.$message.error('更新所有服务评分失败');
