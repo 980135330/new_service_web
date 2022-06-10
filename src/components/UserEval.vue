@@ -37,31 +37,34 @@
             <el-form  label-width="120px" style="width: 70%;">
 
                 <el-form-item label="订单号">
-                <el-input v-model="form.name" />
+                <el-input v-model="form.orderNumber" />
                 </el-form-item>
+<!--              <el-form-item label="服务编号">-->
+<!--                <el-input v-model="form.name" />-->
+<!--              </el-form-item>-->
 
-                <el-form-item label="检测机构">
-                <el-input v-model="form.name" />
-                </el-form-item>
+<!--                <el-form-item label="检测机构">-->
+<!--                <el-input v-model="form.name" />-->
+<!--                </el-form-item>-->
 
-                <el-form-item label="检测对象">
-                <el-input v-model="form.name" />
-                </el-form-item>
+<!--                <el-form-item label="检测对象">-->
+<!--                <el-input v-model="form.name" />-->
+<!--                </el-form-item>-->
 
-                <el-form-item label="检测项目">
-                <el-input v-model="form.name" />
-                </el-form-item>
+<!--                <el-form-item label="检测项目">-->
+<!--                <el-input v-model="form.name" />-->
+<!--                </el-form-item>-->
 
                 <el-form-item label="质量评分">
-                <el-input v-model="form.name" />
+                <el-input v-model="form.quality" />
                 </el-form-item>
 
                 <el-form-item label="速度评分">
-                <el-input v-model="form.name" />
+                <el-input v-model="form.speed" />
                 </el-form-item>
                
                 <el-form-item label="态度评分">
-                <el-input v-model="form.name" />
+                <el-input v-model="form.attitude" />
                 </el-form-item>
 
             <div style="margin-left: 80%; margin-top: 3%;">
@@ -93,7 +96,11 @@ export default {
   data(){
     return{
       form : {
-        username : ''
+        username : '',
+        orderNumber: '',
+        quality: '',
+        speed: '',
+        attitude: ''
 
       },
       tableData:[],
@@ -106,11 +113,24 @@ export default {
         async getUserInfo(){
           console.log(this.$route.query.username)
           this.form.username=this.$route.query.username
+          this.$message.success('用户名'+this.form.username);
         },
         async submit(){
-                        const ret = await this.$http.get('login.json')
-                        console.log(ret.data)
-                        },
+          const ret = await this.$http.post('http://localhost:9001/user/comment',{
+            orderNumber : this.form.orderNumber,
+            quality : this.form.quality,
+            speed : this.form.speed,
+            attitude : this.form.attitude,
+            userName : this.form.username
+          })
+          console.log(ret.data)
+          if(ret.data.code == 200){
+            this.$message.success('提交服务成功');
+          }
+          else{
+            this.$message.error('提交服务失败');
+          }
+        },
       usersearch(){
         this.$router.push({path:'/usersearch',query : { username: this.form.username}})
       },

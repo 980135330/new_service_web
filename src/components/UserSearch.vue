@@ -145,7 +145,7 @@ export default{
             detectPrice : item.detectPrice,
             detectTime : item.detectTime,
             detectStandard : item.detectStandard,
-            username : this.form.username
+            userName : this.form.username
 
           });
           datalist.push(item.serviceId);
@@ -174,6 +174,7 @@ export default{
       async getUserInfo(){
         console.log(this.$route.query.username)
         this.form.username=this.$route.query.username
+        this.$message.success('用户名'+this.form.username);
       },
         usersearch(){
           this.$router.push({path:'/usersearch',query : { username: this.form.username}})

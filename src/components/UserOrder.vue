@@ -44,34 +44,34 @@
                   <el-table-column property="detectCompany" label="检测机构" width="120" />
                   <el-table-column property="detectObject" label="检测对象" width="120" />
                   <el-table-column property="detectProject" label="检测项目" width="120" />
-<!--                  <el-table-column property="detectPrice" label="检测价格" width="120" />-->
-<!--                  <el-table-column property="detectTime" label="检测时间" width="120" />-->
-<!--                  <el-table-column property="detectStandard" label="检测标准" width="120" />-->
-<!--                  <el-table-column property="detectScore" label="服务评分" width="120" />-->
-                  <el-table-column property="quality" label="质量评分" width="120">
-                      <el-input
-                          size="mini"
-                          v-model="this.form.quality"
-                          placeholder="请输入（1-5）"
-                      ></el-input>
-                      <span>{{ this.form.quality }}</span>
-                  </el-table-column>
-                  <el-table-column property="speed" label="速度评分" width="120">
-                    <el-input
-                        size="mini"
-                        v-model="this.form.speed"
-                        placeholder="请输入（1-5）"
-                    ></el-input>
-                    <span>{{ this.form.speed }}</span>
-                  </el-table-column>
-                  <el-table-column property="attitude" label="态度评分" width="120">
-                    <el-input
-                        size="mini"
-                        v-model="this.form.attitude"
-                        placeholder="请输入（1-5）"
-                    ></el-input>
-                    <span>{{ this.form.attitude }}</span>
-                  </el-table-column>
+                  <el-table-column property="detectPrice" label="检测价格" width="120" />
+                  <el-table-column property="detectTime" label="检测时间" width="120" />
+                  <el-table-column property="detectStandard" label="检测标准" width="120" />
+                  <el-table-column property="createTime" label="下单时间" width="120" />
+<!--                  <el-table-column property="qualityInput" label="质量评分" width="120">-->
+<!--                      <el-input-->
+<!--                          size="mini"-->
+<!--                          v-model="this.form.quality"-->
+<!--                          placeholder="请输入（1-5）"-->
+<!--                      ></el-input>-->
+<!--                      <span>{{ this.form.quality }}</span>-->
+<!--                  </el-table-column>-->
+<!--                  <el-table-column property="speedInput" label="速度评分" width="120">-->
+<!--                    <el-input-->
+<!--                        size="mini"-->
+<!--                        v-model="this.form.speed"-->
+<!--                        placeholder="请输入（1-5）"-->
+<!--                    ></el-input>-->
+<!--                    <span>{{ this.form.speed }}</span>-->
+<!--                  </el-table-column>-->
+<!--                  <el-table-column property="attitudeInput" label="态度评分" width="120">-->
+<!--                    <el-input-->
+<!--                        size="mini"-->
+<!--                        v-model="this.form.attitude"-->
+<!--                        placeholder="请输入（1-5）"-->
+<!--                    ></el-input>-->
+<!--                    <span>{{ this.form.attitude }}</span>-->
+<!--                  </el-table-column>-->
             </el-table>
          <el-pagination
              v-model:current-page="currentPage"
@@ -84,7 +84,7 @@
 
             <div style="margin-left: 80%; margin-top: 3%;">
 
-            <el-button @click="submit()">评价订单</el-button>
+              <el-button @click="deleteSelectionOrder()">删除订单</el-button>
 
             </div>
 
@@ -110,9 +110,9 @@ export default{
     return{
       form : {
         username : '',
-        quality: 4,
-        speed: 4,
-        attitude: 4
+        quality: '',
+        speed: '',
+        attitude: ''
 
       },
       tableData:[],
@@ -134,9 +134,29 @@ export default{
       this.tableData = res.data.data.records;
       this.dataCount = res.data.data.total;
     },
+    async deleteSelectionOrder(){
+      console.log(this.dataonLineListSelections);
+      // console.log(this.multipleSelection)
+      let datalist = [];
+      this.dataonLineListSelections.forEach(item => {
+        this.$http.get("http://localhost:9001/admin/deleteOrder",{
+          params: {
+            orderNumber: item.orderNumber
+          }
+        });
+        datalist.push(item.orderNumber);
+      });
+      this.$message.success('删除订单成功');
+      console.log(datalist);
+
+    },
+    handleSelectionChange(val) {
+      this.dataonLineListSelections = val;
+    },
     async getUserInfo(){
       console.log(this.$route.query.username)
       this.form.username=this.$route.query.username
+      this.$message.success('用户名'+this.form.username);
     },
     usersearch(){
       // await this.getUserInfo();
