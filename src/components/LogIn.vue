@@ -32,7 +32,7 @@
 
                     <el-form-item class="btns">
                     <el-button type="primary" @click = "logevent">登录</el-button>
-                    <el-button type="primary" @click = "signup">注册</el-button>
+<!--                    <el-button type="primary" @click = "signup">注册</el-button>-->
                     </el-form-item>
                 </el-form>
                 </div>

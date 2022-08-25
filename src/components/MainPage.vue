@@ -7,7 +7,8 @@
               
         </el-col>
         <el-col :span="12">
-              <el-input  placeholder="请输入检测服务内容"
+              <el-input  v-model="form.requirement"
+                  placeholder="请输入检测服务内容"
                     prefix-icon="el-icon-search"
                     style="top: 20%;width: 100%;left: 0%;"
                     >
@@ -27,7 +28,7 @@
         <el-col :span="3">
         <div style =  "margin-top:15%">
          <a  href="./login" style="margin-right: 28px; font-size: 18px;">请登录</a>
-         <a  href="" style="margin-right: 28px; font-size: 18px;top: 50%;">注册</a>
+         <a  href="./signup" style="margin-right: 28px; font-size: 18px;top: 50%;">注册</a>
         </div>
 
 
@@ -109,6 +110,26 @@
 import { ElMessageBox } from 'element-plus'
 
 export default {
+  data(){
+    return{
+      form : {
+        username : '',
+        requirement : ''
+        // serviceId : '',
+        // detectCompany : '',
+        // detectObject : '',
+        // detectProject : '',
+        // detectPrice : '',
+        // detectTime : '',
+        // detectStandard : ''
+
+      },
+      tableData:[],
+      currentPage: 1,
+      pageSize: 10,
+      dataCount: 100
+    }
+  },
   
   name: 'MainPage',
   methods: {

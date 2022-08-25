@@ -161,7 +161,12 @@ export default{
       },
 
       async findSerivce(){
-        const res = await this.$http.get("http://localhost:9001/user/findService",{
+        // const res = await this.$http.get("http://localhost:9001/user/findService",{
+        //   params: {
+        //     requirement: this.form.requirement
+        //   }
+        // });
+        const res = await this.$http.get("http://localhost:9001//EsFindService/findService",{
           params: {
             requirement: this.form.requirement
           }

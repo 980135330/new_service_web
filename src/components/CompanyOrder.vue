@@ -40,7 +40,7 @@
             >
                 <el-table-column type="selection" width="55" />
 
-                  <el-table-column property="detectCompany" label="订单号" width="120" />
+                  <el-table-column property="orderNumber" label="订单号" width="120" />
                   <el-table-column property="userName" label="用户名" width="120" />
                   <el-table-column property="serviceId" label="服务编号" width="120" />
                   <el-table-column property="detectCompany" label="检测机构" width="120" />

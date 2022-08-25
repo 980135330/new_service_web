@@ -62,17 +62,21 @@
                 </el-form-item>
 
                 <el-form-item label="检测价格">
-                <el-input v-model="form.detectPrice" />
+                <el-input v-model="form.detectPrice" placeholder="人民币（元）为单位" />
                 </el-form-item>
 
                 <el-form-item label="检测时间">
-                <el-input v-model="form.detectTime" />
+                <el-input v-model="form.detectTime" placeholder="以天为单位，包括节假日y" />
                 </el-form-item>
 
 
                 <el-form-item label="检测标准">
                 <el-input v-model="form.detectStandard" />
                 </el-form-item>
+
+              <el-form-item label="服务介绍">
+                <el-input v-model="form.detectNote" />
+              </el-form-item>
 
                 
             </el-form>
@@ -107,7 +111,8 @@ export default {
               detectProject : '',
               detectPrice : '',
               detectTime : '',
-              detectStandard : ''
+              detectStandard : '',
+              detectNote: ''
             }
         }
     },
